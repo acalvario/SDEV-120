@@ -1,0 +1,18 @@
+function main():
+	settings, players, questions = setup_game()
+	while not all_questions_asked(questions):
+		for player in players:
+			display_board(questions)
+			q = select_question(player)
+			response = ask_question(q)
+			if validate_response(response):
+				correct = check_answer(response, q.answer)
+				if correct:
+					update_score(player, q.value)
+				else:
+					update_score(player, -q.value_if_penalty)
+			else:
+				inform("Please phrase your response as a question.")
+			if all_questions_asked(questions): break
+	final_jeopardy(players)
+	show_final_scores(players)
